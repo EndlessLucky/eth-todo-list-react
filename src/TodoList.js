@@ -17,7 +17,15 @@ class TodoList extends Component {
             return(
               <div className="taskTemplate" className="checkbox" key={key}>
                 <label>
-                  <input type="checkbox" />
+                  <input type="checkbox" 
+                  name={task.id}
+                  defaultChecked={task.completed}
+                  ref={(input) => {
+                    this.checkbox = input
+                  }}
+                  onClick={(event) => {
+                    this.props.toggleCompleted(this.checkbox.name)
+                  }}/>
                   <span className="content">{task.content}</span>
                 </label>
               </div>

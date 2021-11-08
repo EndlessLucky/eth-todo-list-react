@@ -14,19 +14,12 @@ class App extends Component {
       loading: true
     };
     this.createTask = this.createTask.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
   }
 
   componentWillMount() {
     this.loadBlockchainData();
-  }
-
-  createTask(content) {
-    this.setState({ loading: true })
-    this.state.todoList.methods.createTask(content).send({ from: this.state.account })
-    .once('receipt', (receipt) => {
-      this.setState({ loading: false })
-    })
-  }
+  } 
 
   async loadBlockchainData() {
     const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
@@ -45,6 +38,22 @@ class App extends Component {
     }
     this.setState({ loading: false });
   }  
+
+  createTask(content) {
+    this.setState({ loading: true })
+    this.state.todoList.methods.createTask(content).send({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
+
+  toggleCompleted(taskId) {
+    this.setState({ loading: true })
+    this.state.todoList.methods.toggleCompleted(taskId).send({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
 
   render() {
     return (
